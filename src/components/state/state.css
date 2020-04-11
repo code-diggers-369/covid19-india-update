@@ -1,0 +1,7 @@
+.search_bar_div {
+  flex-direction: column;
+  display: flex;
+  justify-content: end;
+  align-items: flex-end;
+  margin-top: -15px;
+}

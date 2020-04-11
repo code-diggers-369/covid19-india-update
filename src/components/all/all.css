@@ -1,0 +1,9 @@
+th {
+  text-align: center;
+}
+.card_format{
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+}
+
