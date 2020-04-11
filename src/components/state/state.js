@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import "../assets/bootstrap/css/bootstrap.min.css";
+// import "../assets/bootstrap/css/bootstrap.min.css";
 import "./state.css";
 import Statedata from "../statedata/statedata";
 import { GoSearch } from "react-icons/go";
@@ -50,7 +50,7 @@ export default class state extends Component {
 
   render() {
     return (
-      <>
+      <div>
         <div className="search_bar_div container">
           <div className="input-group">
             <input
@@ -84,7 +84,7 @@ export default class state extends Component {
           </datalist>
         </div>
         <Statedata stateData={this.state.stateData} />
-      </>
+      </div>
     );
   }
 }
