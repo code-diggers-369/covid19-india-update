@@ -1,7 +1,9 @@
-.search_bar_div {
-  flex-direction: column;
-  display: flex;
-  justify-content: end;
-  align-items: flex-end;
-  margin-top: -15px;
+.box {
+  width: 100%;
+  text-align: center;
+  border: 1px solid #999;
+  font-size: larger;
+  background-color: #eee;
+  border-radius: 5px;
+  box-shadow: 4px 4px #ccc;
 }

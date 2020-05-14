@@ -13,7 +13,7 @@ export default class india extends Component {
   };
 
   getCountryData = async () => {
-    var ref = await axios("https://corona.lmao.ninja/countries/India");
+    var ref = await axios("https://corona.blloc.com/current?country=India");
 
     this.setState({ india: ref.data, loading: false });
   };
@@ -37,10 +37,10 @@ export default class india extends Component {
                   <div className="row align-items-center no-gutters">
                     <div className="col mr-2">
                       <div className="text-light font-weight-bold text-xs mb-3">
-                        <span>Active Case</span>
+                        <span>Confirm Case</span>
                       </div>
                       <div className="text-light font-weight-bold h5 mb-0">
-                        <span>{this.state.india.active}</span>
+                        <span>{this.state.india.confirmed}</span>
                       </div>
                     </div>
                     <div className="col-auto">

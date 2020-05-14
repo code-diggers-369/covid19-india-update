@@ -24,6 +24,17 @@ export default class App extends Component {
 
         <center>
           <div>
+            <button
+              className="btn btn-dark mt-2"
+              onClick={() => window.location.reload()}
+            >
+              Reload
+            </button>
+          </div>
+        </center>
+
+        <center>
+          <div>
             <Chart />
           </div>
         </center>

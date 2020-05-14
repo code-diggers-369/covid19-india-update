@@ -17,11 +17,31 @@ export default class districtwise extends Component {
       "https://api.covid19india.org/v2/state_district_wise.json"
     );
 
-    ref.data.forEach((l) => {
+    await ref.data.forEach(async (l) => {
       if (l.state === this.props.stateName) {
-        this.setState({ districtData: l.districtData });
+        //this.setState({ districtData: l.districtData });
+
+        var data = await this.sortingData(l.districtData);
+        this.setState({ districtData: data });
       }
     });
+  };
+
+  sortingData = async (data) => {
+    var order = await data.sort((a, b) => {
+      var district1 = a.confirmed;
+      var district2 = b.confirmed;
+
+      if (district1 > district2) {
+        return -1;
+      }
+      if (district1 < district2) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return order;
   };
 
   componentDidUpdate = async () => {

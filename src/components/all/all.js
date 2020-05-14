@@ -16,7 +16,7 @@ export default class all extends Component {
   getAll = async () => {
     this.setState({ loading: true });
 
-    const res = await axios.get("https://corona.lmao.ninja/all");
+    const res = await axios.get("https://corona.blloc.com");
 
     this.setState({ all: res.data, loading: false });
   };
@@ -42,10 +42,10 @@ export default class all extends Component {
                   <div className="row align-items-center no-gutters">
                     <div className="col mr-2">
                       <div className="text-light font-weight-bold  text-xs mb-3">
-                        <span>Active Case</span>
+                        <span>Confirm Case</span>
                       </div>
                       <div className="text-light font-weight-bold h5 mb-0">
-                        <span>{this.state.all.active}</span>
+                        <span>{this.state.all.confirmed}</span>
                       </div>
                     </div>
                     <div className="col-auto">
