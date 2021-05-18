@@ -10,6 +10,8 @@ All Data Is Update Daily 2 Times. If Any Bug Is Found The Put Issues
 
 Open This Website Live www.corona-update.gq
 
+<a href="https://www.buymeacoffee.com/hareshprajapati"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=hareshprajapati&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff"></a>
+
 ## Setup 
 
 npm i && npm start
