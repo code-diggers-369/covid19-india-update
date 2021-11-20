@@ -1,91 +1,98 @@
 import React, { Component } from "react";
+import { Col, Row } from "react-bootstrap";
 import axios from "axios";
-// import "../assets/bootstrap/css/bootstrap.min.css";
+
 import "./state.css";
-import Statedata from "../statedata/statedata";
-// import { GoSearch } from "react-icons/go";
+
+import District from "../districtwise/districtwise";
 
 export default class state extends Component {
   state = {
-    stateList: [],
-    stateNm: "",
     stateData: [],
+    indiaData: {},
   };
 
   componentDidMount = async () => {
-    await this.getStateList();
-  };
-
-  getStateList = async () => {
-    var ref = await axios(
-      "https://api.covid19india.org/v2/state_district_wise.json"
-    );
-
-    var order = await this.sortingData(ref);
-
-    await this.setState({ stateList: order });
-  };
-
-  sortingData = async (ref) => {
-    var data = await ref.data.sort((a, b) => {
-      var state1 = a.state.toUpperCase();
-      var state2 = b.state.toUpperCase();
-
-      if (state1 < state2) {
-        return -1;
-      }
-      if (state1 > state2) {
-        return 1;
-      }
-
-      return 0;
-    });
-
-    return data;
+    await this.getData();
   };
 
   getData = async () => {
-    if (this.state.stateNm) {
-      var refData = await axios("https://api.covid19india.org/data.json");
+    var { data } = await axios(
+      "https://covid-api.mmediagroup.fr/v1/cases?country=India"
+    );
 
-      var district = this.state.stateNm;
+    const finalList = [];
 
-      await refData.data.statewise.forEach((l) => {
-        if (l.state === district) {
-          this.setState({ stateData: l });
-        }
-      });
-    } else {
-      await this.setState({ stateData: [] });
-    }
-  };
-
-  setStateName = async (e) => {
-    await this.setState({ stateNm: e.target.value });
-
-    if (this.state.stateNm === "Select State") {
-      await this.setState({ stateData: [] });
+    for (const StateNameKey in data) {
+      if (StateNameKey !== "All") {
+        finalList.push({
+          name: StateNameKey,
+          data: data[StateNameKey],
+        });
+      }
     }
 
-    this.getData();
+    this.setState({
+      stateData: finalList,
+      indiaData: data["All"],
+    });
   };
 
   render() {
     return (
       <div>
-        <div className="search_bar_div container">
-          <h3>Select State From List</h3>
-          <select className="box mb-3" onChange={(e) => this.setStateName(e)}>
-            <option>Select State</option>
-            {this.state.stateList.map((list) => (
-              <option key={list.state} value={list.state}>
-                {list.state}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <Statedata stateData={this.state.stateData} />
+        {this.state.stateData.length !== 0 ? (
+          <div className="container-fluid mt-3 text-light ">
+            <div className="back p-3 ">
+              <div>
+                <center>
+                  <div>
+                    <h2 className="text-dark">
+                      {this.state.indiaData.country}
+                    </h2>
+                  </div>
+                  <div className="">
+                    <Row className="p-3  ">
+                      <Col className="text-light p-3 col m-1 items shadow active-cases">
+                        <div className="heading">Population</div>
+                        <div className="value">
+                          {this.state.indiaData.population}
+                        </div>
+                      </Col>
+                      <Col className="text-light p-3 col m-1 items shadow confirm">
+                        <div className="heading">Confirm </div>
+                        <div className="value">
+                          {this.state.indiaData.confirmed}
+                        </div>
+                      </Col>
+                      <Col className="text-light p-3 col m-1 items shadow total-death">
+                        <div className="heading">Deaths</div>
+                        <div className="value">
+                          {this.state.indiaData.deaths}
+                        </div>
+                      </Col>
+                      <Col className="text-light p-3 col m-1 items shadow recovered">
+                        <div className="heading">Recovered</div>
+                        <div className="value">
+                          {this.state.indiaData.recovered}
+                        </div>
+                      </Col>
+                      <Col className="text-light p-3 col m-1 items shadow update">
+                        <div className="heading">Last Update</div>
+                        <div className="value">
+                          {this.state.stateData[0].data.updated}
+                        </div>
+                      </Col>
+                    </Row>
+                  </div>
+                  <div>
+                    <District stateData={this.state.stateData} />
+                  </div>
+                </center>
+              </div>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }

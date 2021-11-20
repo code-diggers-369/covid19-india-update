@@ -13,9 +13,15 @@ export default class india extends Component {
   };
 
   getCountryData = async () => {
-    var ref = await axios("https://corona.blloc.com/current?country=India");
+    try {
+      var ref = await axios(
+        "https://covid-api.mmediagroup.fr/v1/cases?country=India"
+      );
 
-    this.setState({ india: ref.data, loading: false });
+      this.setState({ india: ref.data["All"], loading: false });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
@@ -26,7 +32,7 @@ export default class india extends Component {
             <h3>Loading...</h3>
           </div>
         ) : (
-          <div className="container">
+          <div className="container mt-5">
             <div className="d-sm-flex col-md-6 col-xl-6 mb-4 justify-content-center align-items-center mb-4">
               <h3 className="text-dark mb-0">India Status</h3>
             </div>

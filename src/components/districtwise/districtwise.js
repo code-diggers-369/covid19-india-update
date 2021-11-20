@@ -4,80 +4,70 @@ import { Col, Row } from "react-bootstrap";
 import axios from "axios";
 
 export default class districtwise extends Component {
-  state = {
-    districtData: [],
-  };
-
-  componentDidMount = async () => {
-    await this.getDistrictData();
-  };
-
-  getDistrictData = async () => {
-    var ref = await axios(
-      "https://api.covid19india.org/v2/state_district_wise.json"
-    );
-
-    await ref.data.forEach(async (l) => {
-      if (l.state === this.props.stateName) {
-        //this.setState({ districtData: l.districtData });
-
-        var data = await this.sortingData(l.districtData);
-        this.setState({ districtData: data });
-      }
-    });
-  };
-
-  sortingData = async (data) => {
-    var order = await data.sort((a, b) => {
-      var district1 = a.confirmed;
-      var district2 = b.confirmed;
-
-      if (district1 > district2) {
-        return -1;
-      }
-      if (district1 < district2) {
-        return 1;
-      }
-      return 0;
-    });
-
-    return order;
-  };
-
-  componentDidUpdate = async () => {
-    await this.getDistrictData();
-  };
-
   render() {
     return (
       <div>
-        {this.state.districtData.length !== 0 ? (
+        {this.props.stateData.length !== 0 ? (
           <div>
             <br></br>
-            <h3 className="text-dark">Confirmed Cases In District</h3>
-            <Row>
-              {this.state.districtData.map((list) => (
-                <Col lg={4} xs={6} sm={4} key={list.district}>
-                  <div
-                    className="bg-light text-dark  m-1 p-2 shadow"
-                    style={{ borderRadius: "20px" }}
-                  >
-                    <h4 style={{ fontWeight: "600", fontSize: "medium" }}>
-                      {list.district}
-                    </h4>
-                    {list.confirmed > 20 ? (
-                      <h5 style={{ color: "red" }}>{list.confirmed}</h5>
-                    ) : list.confirmed > 10 ? (
-                      <h5 style={{ color: "blue" }}>{list.confirmed}</h5>
-                    ) : (
-                      <h5>{list.confirmed}</h5>
-                    )}
-
-                    <h6>( Today New Cases {list.delta.confirmed} )</h6>
+            {/* <h3 className="text-dark">Confirmed Cases In District</h3> */}
+            {/* <Row> */}
+            <div className="row row-cols-1 row-cols-md-3 g-4 text-dark">
+              {this.props.stateData.map((list, i) => {
+                return (
+                  <div className="col mt-3 " key={i}>
+                    <div
+                      className="card h-100 shadow"
+                      style={{ borderRadius: "20px" }}
+                    >
+                      <div
+                        className="card-header "
+                        style={{ borderRadius: "20px" }}
+                      >
+                        <h4>{list.name}</h4>
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title ">
+                          Confirmed{" "}
+                          <span className="text-primary ml-2">
+                            {list.data.confirmed}
+                          </span>
+                        </h5>
+                        <h5 className="card-title ">
+                          Deaths{" "}
+                          <span className="text-danger ml-2">
+                            {list.data.deaths}
+                          </span>
+                        </h5>
+                      </div>
+                    </div>
                   </div>
-                </Col>
-              ))}
-            </Row>
+
+                  // <Col lg={4} xs={6} sm={4} key={list.district} key={i}>
+                  //   <div
+                  //     className="bg-light text-dark  m-1 p-2 shadow"
+                  //     style={{ borderRadius: "20px" }}
+                  //   >
+                  //     <h4 style={{ fontWeight: "600", fontSize: "medium" }}>
+                  //       {list.name}
+                  //     </h4>
+                  //     Confirmed
+                  //     <span style={{ color: "red", marginLeft: "7px" }}>
+                  //       {list.data.confirmed}
+                  //     </span>
+                  //     <br />
+                  //     Deaths
+                  //     <span style={{ color: "red", marginLeft: "7px" }}>
+                  //       {list.data.deaths}
+                  //     </span>
+                  //     <br />
+                  //     {/* <h6>( Today New Cases {list.delta.confirmed} )</h6> */}
+                  //   </div>
+                  // </Col>
+                );
+              })}
+              {/* </Row> */}
+            </div>
           </div>
         ) : null}
       </div>

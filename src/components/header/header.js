@@ -3,7 +3,7 @@ import React, { Component } from "react";
 export default class header extends Component {
   render() {
     return (
-      <div className="container  ">
+      <div className="container text-center ">
         <div className="mb-5">
           <center>
             <h1
